@@ -215,17 +215,17 @@ def sort_into_priority(t_c, prty):
             'Feature Request (Removal or Enhancement)':[],
            'App Usability':[],'User Interface or User Experience':[],'Functional Error':[],
            'Bug Report':[], 'Hardware (Storage, Battery, Device)':[], 
-           'Others':[]}
+           'Others':[], 'Time':[]}
     
     Cost = {'Hardware (Storage, Battery, Device)':[],'Feature Request (Removal or Enhancement)':[],
             'Bug Report':[],'Functional Error':[], 'App Usability':[],
            'User Interface or User Experience':[],'Security':[],'Ethical Issues':[], 
-           'Question and Assistance':[], 'Pricing':[], 'Others':[]}
+           'Question and Assistance':[], 'Pricing':[], 'Others':[], 'Cost':[]}
     
     Importance = {'App Usability':[], 'User Interface or User Experience':[],'Security':[], 
                   'Hardware (Storage, Battery, Device)':[], 'Bug Report':[], 'Functional Error':[],'Pricing':[],
                   'Feature Request (Removal or Enhancement)':[],'Ethical Issues':[],'Question and Assistance':[],
-                  'Others':[]}
+                  'Others':[], 'Importance':[]}
     
     if prty == 'Time':
         Time.update(t_c)
