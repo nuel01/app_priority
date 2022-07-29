@@ -234,7 +234,8 @@ def sort_into_priority(t_c, prty):
         #      for i in Time:
         #          print(i.upper(), sep='', end='\n- ', file=filehand, flush=False)
         #          print(*Time.get(i), sep='\n- ', end='\n\n', file=filehand, flush=False)
-        return joblib.dump(Time, open('save.p', 'wb'))
+        #return joblib.dump(Time, open('save.p', 'wb'))
+        return 200
     elif prty == 'Cost':
         Cost.update(t_c)
         # with open('file.txt', 'w+', encoding='utf8') as filehand:
@@ -243,7 +244,8 @@ def sort_into_priority(t_c, prty):
         #      for i in Cost:
         #          print(i.upper(), sep='', end='\n- ', file=filehand, flush=False)
         #          print(*Cost.get(i), sep='\n- ', end='\n\n', file=filehand, flush=False)
-        return joblib.dump(Cost, open('save.p', 'wb'))
+        #return joblib.dump(Cost, open('save.p', 'wb'))
+        return 200
     else:
         Importance.update(t_c)
         # with open('file.txt', 'w+', encoding='utf8') as filehand:
@@ -252,8 +254,8 @@ def sort_into_priority(t_c, prty):
         #      for i in Importance:
         #          print(i.upper(), sep='', end='\n- ', file=filehand, flush=False)
         #          print('\n- '.join(Importance.get(i)), sep='', end='\n\n', file=filehand, flush=False)
-        return joblib.dump(Importance, open('save.p', 'wb'))
-    
+        #return joblib.dump(Importance, open('save.p', 'wb'))
+        return 200
 
 def fileD(file):
     with open('file.txt', 'w+', encoding='utf8') as filehand:             
