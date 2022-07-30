@@ -196,7 +196,7 @@ def classify_rvws(asd):
                  'Hardware (Storage, Battery, Device)':[], 'Ethical Issues':[], 'Pricing':[],
                  'Security':[]}
     X = asd['content']
-    
+'''    
     tagger = joblib.load('svc.joblib3')
     tf = joblib.load('tf.joblib')
     
@@ -206,7 +206,7 @@ def classify_rvws(asd):
         for keys in tp_catgry.keys():
             if pred == keys:
                 tp_catgry[keys].append(revws)
-        
+'''        
     return tp_catgry
 
 
