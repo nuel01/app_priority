@@ -23,8 +23,8 @@ def runApp(app_id, sort_opt, prty, bnum):
     else:
         asd = clean_rvws(app_scraped_df)
         tp_catgry = classify_rvws(asd)
-        #filehand = sort_into_priority(tp_catgry, prty)
-        return "I GOT HERE!!!"
+        filehand = sort_into_priority(tp_catgry, prty)
+        return filehand
 
 def scrape(app_id, sort_opt, bnum):
     # To store all the reviews scraped 
@@ -234,8 +234,8 @@ def sort_into_priority(t_c, prty):
         #      for i in Time:
         #          print(i.upper(), sep='', end='\n- ', file=filehand, flush=False)
         #          print(*Time.get(i), sep='\n- ', end='\n\n', file=filehand, flush=False)
-        #return joblib.dump(Time, open('save.p', 'wb'))
-        return 200
+        return joblib.dump(Time, open('save.p', 'wb'))
+        #return 200
     elif prty == 'Cost':
         Cost.update(t_c)
         # with open('file.txt', 'w+', encoding='utf8') as filehand:
@@ -244,8 +244,8 @@ def sort_into_priority(t_c, prty):
         #      for i in Cost:
         #          print(i.upper(), sep='', end='\n- ', file=filehand, flush=False)
         #          print(*Cost.get(i), sep='\n- ', end='\n\n', file=filehand, flush=False)
-        #return joblib.dump(Cost, open('save.p', 'wb'))
-        return 200
+        return joblib.dump(Cost, open('save.p', 'wb'))
+        #return 200
     else:
         Importance.update(t_c)
         # with open('file.txt', 'w+', encoding='utf8') as filehand:
@@ -254,8 +254,8 @@ def sort_into_priority(t_c, prty):
         #      for i in Importance:
         #          print(i.upper(), sep='', end='\n- ', file=filehand, flush=False)
         #          print('\n- '.join(Importance.get(i)), sep='', end='\n\n', file=filehand, flush=False)
-        #return joblib.dump(Importance, open('save.p', 'wb'))
-        return 200
+        return joblib.dump(Importance, open('save.p', 'wb'))
+        #return 200
     
 
 def fileD(file):
