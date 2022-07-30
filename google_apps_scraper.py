@@ -24,7 +24,7 @@ def runApp(app_id, sort_opt, prty, bnum):
         asd = clean_rvws(app_scraped_df)
         tp_catgry = classify_rvws(asd)
         #filehand = sort_into_priority(tp_catgry, prty)
-        return "I got here"
+        return "I GOT HERE!!!"
 
 def scrape(app_id, sort_opt, bnum):
     # To store all the reviews scraped 
@@ -168,4 +168,101 @@ def scrape(app_id, sort_opt, bnum):
     print(f"""
     Successfully inserted all '{app_id}' reviews into Main list.\n
     """)
-    print(
+    print('---'*20)
+    print('---'*20)
+    print('\n')
+   
+    # Wait 1 to 5 seconds to start scraping next app
+    time.sleep(random.randint(1,5))    
+    return app_scraped_df
+
+def clean_rvws(asd):
+    
+    asd = asd[asd.score != 4] #drop all >3 score
+    asd = asd[asd.score != 5] #drop all >3 score    
+    asd = asd.drop(columns = ['reviewId','userName', 'userImage', 'score', 'thumbsUpCount','reviewCreatedVersion','at','replyContent','repliedAt','app_id'])  #drop unwanted columns
+    asd = asd.drop_duplicates(['content']) #remove duplicates from content
+    asd['content'] = asd['content'].apply(lambda x: ' '.join([word for word in x.split() if word.isalnum()]))
+    
+    return asd
+
+def classify_rvws(asd):
+    import joblib
+    # a dictionary of content and class will be formed. This will be returned for sort_into_category()
+    #Create a category column in asd
+    tp_catgry = {'Functional Error':[], 'Others':[], 'Bug Report':[], 'Question and Assistance':[],
+                 'Feature Request (Removal or Enhancement)':[],
+                 'User Interface or User Experience':[], 'App Usability':[],
+                 'Hardware (Storage, Battery, Device)':[], 'Ethical Issues':[], 'Pricing':[],
+                 'Security':[]}
+    X = asd['content']
+    
+    tagger = joblib.load('svc.joblib3')
+    tf = joblib.load('tf.joblib')
+    
+    for revws in X:        
+        sent = tf.transform([revws])
+        pred = tagger.predict(sent)
+        for keys in tp_catgry.keys():
+            if pred == keys:
+                tp_catgry[keys].append(revws)
+        
+    return tp_catgry
+
+
+def sort_into_priority(t_c, prty):
+    Time = {'Pricing':[],'Question and Assistance':[],'Ethical Issues':[],'Security':[],
+            'Feature Request (Removal or Enhancement)':[],
+           'App Usability':[],'User Interface or User Experience':[],'Functional Error':[],
+           'Bug Report':[], 'Hardware (Storage, Battery, Device)':[], 
+           'Others':[], 'Time':[]}
+    
+    Cost = {'Hardware (Storage, Battery, Device)':[],'Feature Request (Removal or Enhancement)':[],
+            'Bug Report':[],'Functional Error':[], 'App Usability':[],
+           'User Interface or User Experience':[],'Security':[],'Ethical Issues':[], 
+           'Question and Assistance':[], 'Pricing':[], 'Others':[], 'Cost':[]}
+    
+    Importance = {'App Usability':[], 'User Interface or User Experience':[],'Security':[], 
+                  'Hardware (Storage, Battery, Device)':[], 'Bug Report':[], 'Functional Error':[],'Pricing':[],
+                  'Feature Request (Removal or Enhancement)':[],'Ethical Issues':[],'Question and Assistance':[],
+                  'Others':[], 'Importance':[]}
+    
+    if prty == 'Time':
+        Time.update(t_c)
+        # with open('file.txt', 'w+', encoding='utf8') as filehand:             
+        #      print("REVIEWS CATEGORISED PER TIME ",sep='', end='\n\n', file=filehand, flush=False)
+        #      for i in Time:
+        #          print(i.upper(), sep='', end='\n- ', file=filehand, flush=False)
+        #          print(*Time.get(i), sep='\n- ', end='\n\n', file=filehand, flush=False)
+        #return joblib.dump(Time, open('save.p', 'wb'))
+        return 200
+    elif prty == 'Cost':
+        Cost.update(t_c)
+        # with open('file.txt', 'w+', encoding='utf8') as filehand:
+        #      
+        #      print("REVIEWS CATEGORISED PER COST ",sep='', end='\n\n', file=filehand, flush=False)
+        #      for i in Cost:
+        #          print(i.upper(), sep='', end='\n- ', file=filehand, flush=False)
+        #          print(*Cost.get(i), sep='\n- ', end='\n\n', file=filehand, flush=False)
+        #return joblib.dump(Cost, open('save.p', 'wb'))
+        return 200
+    else:
+        Importance.update(t_c)
+        # with open('file.txt', 'w+', encoding='utf8') as filehand:
+        #      
+        #      print("REVIEWS CATEGORISED PER IMPORTANCE ",sep='', end='\n\n', file=filehand, flush=False)
+        #      for i in Importance:
+        #          print(i.upper(), sep='', end='\n- ', file=filehand, flush=False)
+        #          print('\n- '.join(Importance.get(i)), sep='', end='\n\n', file=filehand, flush=False)
+        #return joblib.dump(Importance, open('save.p', 'wb'))
+        return 200
+    
+
+def fileD(file):
+    with open('file.txt', 'w+', encoding='utf8') as filehand:             
+             print("REVIEWS CATEGORISED ",sep='', end='\n\n', file=filehand, flush=False)
+             for i in file:
+                 print(i.upper(), sep='', end='\n- ', file=filehand, flush=False)
+                 print(*file.get(i), sep='\n- ', end='\n\n', file=filehand, flush=False)
+    filehand.close()
+    return filehand
