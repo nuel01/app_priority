@@ -22,7 +22,7 @@ def runApp(app_id, sort_opt, prty, bnum):
             return 'No Internet Network Detected'
     else:
         asd = clean_rvws(app_scraped_df)
-        tp_catgry = classify_rvws(asd)
+        #tp_catgry = classify_rvws(asd)
         #filehand = sort_into_priority(tp_catgry, prty)
         return "I GOT HERE!!!"
 
