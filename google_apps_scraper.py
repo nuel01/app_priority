@@ -182,7 +182,11 @@ def clean_rvws(asd):
     asd = asd[asd.score != 5] #drop all >3 score    
     asd = asd.drop(columns = ['reviewId','userName', 'userImage', 'score', 'thumbsUpCount','reviewCreatedVersion','at','replyContent','repliedAt','app_id'])  #drop unwanted columns
     asd = asd.drop_duplicates(['content']) #remove duplicates from content
-    asd['content'] = asd['content'].apply(lambda x: ' '.join([word for word in x.split() if word.isalnum()]))
+    bow = ["shouldn't","wouldn't", "ain't","shan't", "isn't", "is not","will not","would not","are not","can not","doesn't","does not","cant","aint","isnt",
+            "doesnt","wouldnt", "properly", "feature","dissapointed", "frustrated", "dissatisfied", "issue", "worse", "worst", "waste", "stopped", "crash", 
+            "messy","frustrating", "crashing","bug", "crashes", "can't", "sucks", "awful", "fix", "poor"]      
+    asd['content'] = asd['content'].apply(lambda x: ' '.join([word for word in x.split() if word not in (bow)]))
+    #asd['content'] = asd['content'].apply(lambda x: ' '.join([word for word in x.split() if word.isalnum()]))
     
     return asd
 
